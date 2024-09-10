@@ -13,7 +13,7 @@ then(response => {
     console.log(error);
 })
 
-function showStudents (arr) {
+function showStudents (arr = []) {
     console.log(arr);
     studentList.innerHTML = "";
     if (arr.length == 0) {
