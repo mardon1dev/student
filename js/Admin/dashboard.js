@@ -129,7 +129,7 @@ async function addNewStudent(e) {
 outerPage.classList.remove("scale-100");
 outerPage.classList.add("scale-0");
 addForm.reset();
-// showStudents();
+showStudents();
 }
 
 addForm.addEventListener("submit", addNewStudent);
@@ -188,14 +188,14 @@ async function updateInfo(id) {
     outerPage.classList.remove("scale-100");
     outerPage.classList.add("scale-0");
     addForm.reset();
-    // showStudents();
+    showStudents();
 }
 }
 
 // Delete student;
 async function deleteStudent(id){
     await axios.delete(`http://localhost:3000/students/${id}`);
-    // showStudents();
+    showStudents();
 }
 
 // Sort Students
