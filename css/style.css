@@ -1,0 +1,213 @@
+/* Fonts */
+@font-face {
+    font-display: swap; 
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/montserrat-v26-latin-regular.woff2') format('woff2'); 
+}
+@font-face {
+    font-display: swap; 
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    src: url('../fonts/montserrat-v26-latin-500.woff2') format('woff2'); 
+}
+@font-face {
+    font-display: swap; 
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    src: url('../fonts/montserrat-v26-latin-600.woff2') format('woff2'); 
+}
+@font-face {
+    font-display: swap; 
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../fonts/montserrat-v26-latin-700.woff2') format('woff2'); 
+}
+/* Fonts */
+
+
+body{
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Login start */
+.login-body, .register-body{
+    background: linear-gradient(71.17deg, #FEAF00 19.35%, #F8D442 90.12%);
+}
+.login-main, .register-main{
+    max-width: 475px;
+    width: 100%;
+    box-shadow: 2px 5px 10px 0px #0000001A;
+}
+.login-info h1, .register-info h1{
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 39.01px;
+    position: relative;
+}
+.login-info h1::after, .register-info h1::after{
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 100%;
+    background-color: #F8D442;
+    left: calc(50% - 150px);
+}
+.login-info span, .register-info span{
+    display: block;
+    margin-top: 43px;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 26.82px;
+}
+.login-info p, .register-info p{
+    margin-top: 9px;
+}
+.login-form, .register-form{
+    margin-top: 50px;
+}
+.login-form span, .register-form span{
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17.07px;
+    color: #6C6C6C;
+}
+.login-form input, .register-form input{
+    margin-top: 11px;
+    padding: 15px;
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #E5E5E5;
+    border-radius: 4px;
+    outline: none;
+}
+.login-form input ::placeholder, .register-form input ::placeholder{
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.63px;
+    color: #CDCDCD;
+}
+.login-form p, .register-form p{
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.63px;
+}
+.login-form button, .register-form button{
+    padding: 14px;
+    width: 100%;
+    background-color: #FEAF00;
+    color: #ffffff;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    transition:  all .3s ease;
+}
+.login-form button:hover, .register-form button:hover{
+    border-color: #FEAF00;
+    background-color: transparent;
+    color: #FEAF00;
+
+}
+.login-form a{
+    margin-top: 11px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17.07px;
+    color: #000000;
+    transition:  all .3s ease;
+}
+.login-form a:hover{
+    color: #FEAF00;
+}
+
+.green{
+    border: 1px solid #34C759 !important;
+}
+.red{
+    border: 1px solid #FF3737 !important;
+}
+
+/* Dashboard  start*/
+.dashboard-info{
+    /* margin-left: 25px; */
+    padding-left: 12.5px;
+}
+.dashboard-info h1{
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    position: relative;
+}
+.dashboard-info ::after{
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 100%;
+    background-color: #F8D442;
+    left: -12px;
+}
+
+.logout-btn{
+    padding: 8px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: transparent;
+    color: #000000;
+    border-radius: 4px;
+    transition: all .3s ease;
+}
+.logout-btn:hover{
+    gap: 24px;
+    background-color: #FEAF00;
+    color: #ffffff;
+}
+
+/* Update-form */
+.update-form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+.update-form label{
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+}
+.update-form label:nth-child(2){
+    width: 100%;
+}
+.update-form span{
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17.07px;
+    color: #6C6C6C;
+}
+.update-form input{
+    margin-top: 11px;
+    padding: 12px;
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #E5E5E5;
+    border-radius: 4px;
+    outline: none;
+}
+.update-form input::placeholder{
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.63px;
+    color: #CDCDCD;
+}
+
+#update-form-btns{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 8px;
+}
