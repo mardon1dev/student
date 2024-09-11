@@ -137,7 +137,8 @@ async function addNewStudent(e) {
 outerPage.classList.remove("scale-100");
 outerPage.classList.add("scale-0");
 addForm.reset();
-showStudents();
+fetchData()
+// showStudents();
 }
 
 addForm.addEventListener("submit", addNewStudent);
@@ -196,7 +197,8 @@ async function updateInfo(id) {
     outerPage.classList.remove("scale-100");
     outerPage.classList.add("scale-0");
     addForm.reset();
-    showStudents();
+    fetchData()
+    // showStudents();
 }
 }
 
