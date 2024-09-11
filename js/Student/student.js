@@ -6,10 +6,14 @@ console.log(studentData);
 const studentName = document.querySelector(".student-name");
 studentName.textContent = studentData.username;
 
+const loading = document.querySelector(".loading");
+loading.classList.remove("hidden");
+
 const studentInfo = document.querySelector(".student-info");
-studentInfo.innerHTML = `
+setTimeout(() => {
+    studentInfo.innerHTML = `
     <div>
-        <img src=${studentData.imageURL} alt="" width="206" height="216">
+        <img class="rounded-lg" src=${studentData.imageURL} alt="" width="206" height="216">
     </div>
     <div class="flex flex-col gap-4">
         <div>
@@ -30,7 +34,7 @@ studentInfo.innerHTML = `
         </div>
     </div>
 `
-
+}, 1000)
 
 
 

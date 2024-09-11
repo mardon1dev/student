@@ -1,19 +1,20 @@
 // Start
 
+// Database location
+const db = 'http://localhost:3000/students'
+
 const studentList = document.querySelector(".student-list");
 const noInformation = document.querySelector(".no-information");
 const loading = document.querySelector(".loading");
+loading.classList.add("full")
+
+// Get all data from database
 
 async function fetchData(){
     try{
-        // loading.classList.add("full")
-        // loading.classList.remove("hidden")
 
-        const response = await fetch('http://localhost:3000/students')
-        const data = await response.json()
-
-        // loading.classList.add("hidden");
-        // loading.classList.remove("full");
+        const response = await axios(db)
+        const data = await response.data
 
         showStudents(data)
     }
@@ -24,9 +25,9 @@ async function fetchData(){
 
 fetchData() 
 
+// Display students to page.
+
 function showStudents (arr) {
-    console.log(arr);
-    // console.log(arr);
     studentList.innerHTML = "";
     if (arr.length == 0) {
         noInformation.textContent = "No student information."
@@ -88,6 +89,8 @@ const addStudent = document.querySelector(".add-student");
 const outerPage = document.querySelector(".outer-page");
 const addForm = document.querySelector(".update-form");
 
+// For opening modal and closing 
+
 addStudent.addEventListener("click", () => {
     outerPage.classList.add("scale-100");
     outerPage.classList.remove("scale-0");
@@ -101,11 +104,13 @@ outerPage.addEventListener("click", (e) => {
     }
 });
 
-// Image
+// Image 
+// Rasm yuklash uchun FileReader dan foydalanildi chunki URL.createObjectURL bilan muaommalar chiqishi mumkin.
 const image = document.querySelector("#image");
 const showImage = document.querySelector("#showImage");
 image.addEventListener("change", (e)=>{
     const file = e.target.files[0];
+
     // const file = URL.createObjectURL(e.target.files[0]);
     // showImage.src = file
 
@@ -118,7 +123,8 @@ image.addEventListener("change", (e)=>{
 })
 
 
-// Add new student
+// Add new student to database
+
 async function addNewStudent(e) {
     e.preventDefault();
     const imageURL = addForm.querySelector("#showImage").src;
@@ -129,7 +135,7 @@ async function addNewStudent(e) {
     const date = addForm.querySelector("#admission").value;
     const dateAdmission = formatDate(date);
     
-    await axios.post(`http://localhost:3000/students`, {
+    await axios.post(`${db}`, {
     username: username,
     email: email,
     phone: phone,
@@ -142,7 +148,6 @@ outerPage.classList.remove("scale-100");
 outerPage.classList.add("scale-0");
 addForm.reset();
 fetchData()
-// showStudents();
 }
 
 addForm.addEventListener("submit", addNewStudent);
@@ -158,11 +163,11 @@ cancelBtn.addEventListener("click", () => {
     submitBtn.textContent = "Add";
 });
 
-// Update 
 
+// Update student infroamtion 
 
 async function updateInfo(id) {
-    const response = await axios.get(`http://localhost:3000/students/${id}`);
+    const response = await axios.get(`${db}/${id}`);
     const student = response.data;
     
     outerPage.classList.add("scale-100");
@@ -192,7 +197,7 @@ async function updateInfo(id) {
         const dateAdmission = formatDate(date);
         const imageURL = addForm.querySelector("#showImage").src;
         
-        await axios.put(`http://localhost:3000/students/${id}`, {
+        await axios.put(`${db}/${id}`, {
         username: username,
         email: email,
         phone: phone,
@@ -209,7 +214,6 @@ async function updateInfo(id) {
         submitBtn.textContent = "Add";
         addForm.removeEventListener("submit", handleUpdate);
         fetchData()
-        // showStudents();
     }
 }
 
@@ -229,29 +233,29 @@ async function deleteStudent(id){
     deleteYes.addEventListener("click", async () => {
         deleteStudentWrapper.classList.remove("flex");
         deleteStudentWrapper.classList.add("hidden");
-        await axios.delete(`http://localhost:3000/students/${id}`);
+        await axios.delete(`${db}/${id}`);
         fetchData()
     })
 }
 
 // Sort Students
 async function sortStudents() {
-    const response = await axios.get('http://localhost:3000/students');
+    const response = await axios.get(db);
     let students = response.data;
     students = students.sort((a,b)=>{
         return a.username.localeCompare(b.username);
     }).reverse();
     showStudents(students)
 }
-
+// Show student information in a new page from database
 async function showStudentInfo(id){
-    const response = await axios.get(`http://localhost:3000/students/${id}`);
+    const response = await axios.get(`${db}/${id}`);
     const student = response.data;
     localStorage.setItem("studentInfo", JSON.stringify(student));
     loading.classList.remove("hidden")
     setTimeout(() => {
         window.location.pathname = "./student.html"
-    }, 1000);
+    }, 500);
 }
 
 // Search
@@ -259,7 +263,7 @@ const search = document.querySelector("#search");
 search.addEventListener("keyup", searchStudents);
 async function searchStudents(e) {
     const query = e.target.value.trim().toLowerCase();
-    const response = await axios.get('http://localhost:3000/students');
+    const response = await axios.get(db);
     const students = response.data;
     if (query.length > 0 || !query) {
         const filteredStudents = students.filter(student => student.username.toLowerCase().includes(query));
@@ -267,16 +271,37 @@ async function searchStudents(e) {
     }
 }
 
+// Berilgan vaqtni text xolatiga oz'gartirish uchun 
+
 function formatDate(dateString) {
     const date = new Date(dateString);
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+    const year = date.getFullYear();
+    return `${date.getDate()} ${months[date.getMonth()]} ${year}`;
 }
 
-function parseFormattedDate(dateString) {
-    const [day, month, year] = dateString.split(' ');
-    const monthNumber = ('JanFebMarAprMayJunJulAugSepOctNovDec'.indexOf(month) / 3 + 1).toString().padStart(2, '0');
-    return `${year}-${monthNumber}-${day.padStart(2, '0')}`;
+// Text xolatidan input date qiymatiga mos tushish uchun
+
+function parseFormattedDate(dateStr) {
+    // Parse the date from the format "1 Jan 22"
+    const [day, monthName, yearShort] = dateStr.split(' ');
+    
+    // Convert short year to full year
+    const yearFull = `00${yearShort}`;
+    
+    // Convert month name to month number (1-based)
+    const monthNumber = ('JanFebMarAprMayJunJulAugSepOctNovDec'.indexOf(monthName) / 3 + 1).toString().padStart(2, '0');
+
+    // Create a new date object
+    const date = new Date(`${monthNumber}/${day}/${yearFull}`);
+    
+    // Extract year, month, and day from the Date object
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const dayFormatted = date.getDate().toString().padStart(2, '0');
+
+    // Return date in "yyyy-MM-dd" format
+    return `${year}-${month}-${dayFormatted}`;
 }
 
 
@@ -295,7 +320,6 @@ adminImage.addEventListener("change", (e)=>{
     const reader = new FileReader();
     reader.onload = function(){
         adminMainImage.src = reader.result;
-        console.log(adminMainImage.src);
         admin = {
             ...admin,
             image: reader.result
@@ -322,6 +346,7 @@ logout.addEventListener("click", () => {
     logoutYes.addEventListener("click", () => {
         localStorage.removeItem("loggedInUser");
         loading.classList.remove("hidden")
+        loading.classList.add("fixed")
         setTimeout(() => {
             window.location.pathname = "./index.html"
         }, 1000);
