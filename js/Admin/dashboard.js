@@ -8,8 +8,15 @@ let studentsAll;
 
 async function fetchData(){
     try{
+        loading.classList.add("full")
+        loading.classList.remove("hidden")
+
         const response = await fetch('http://localhost:3000/students')
         const data = await response.json()
+
+        loading.classList.add("hidden");
+        loading.classList.remove("full");
+
         studentsAll = data;
         showStudents(studentsAll)
     }
@@ -18,7 +25,7 @@ async function fetchData(){
     }
 }
 
-fetchData()
+fetchData() 
 
 function showStudents (arr = studentsAll) {
     console.log(arr);
@@ -205,7 +212,8 @@ async function updateInfo(id) {
 // Delete student;
 async function deleteStudent(id){
     await axios.delete(`http://localhost:3000/students/${id}`);
-    showStudents();
+    fetchData()
+    // showStudents();
 }
 
 // Sort Students
