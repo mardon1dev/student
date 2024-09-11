@@ -4,8 +4,6 @@ const studentList = document.querySelector(".student-list");
 const noInformation = document.querySelector(".no-information");
 const loading = document.querySelector(".loading");
 
-let studentsAll;
-
 async function fetchData(){
     try{
         loading.classList.add("full")
@@ -17,8 +15,7 @@ async function fetchData(){
         loading.classList.add("hidden");
         loading.classList.remove("full");
 
-        studentsAll = data;
-        showStudents(studentsAll)
+        showStudents(data)
     }
     catch(error){
         console.log(error);
@@ -27,7 +24,7 @@ async function fetchData(){
 
 fetchData() 
 
-function showStudents (arr = studentsAll) {
+function showStudents (arr) {
     console.log(arr);
     // console.log(arr);
     studentList.innerHTML = "";
@@ -199,14 +196,14 @@ async function updateInfo(id) {
         enrollNumber: enrollNumber,
         dateAdmission: dateAdmission,
         imageURL: imageURL
-    });
+        });
     
-    outerPage.classList.remove("scale-100");
-    outerPage.classList.add("scale-0");
-    addForm.reset();
-    fetchData()
-    // showStudents();
-}
+        outerPage.classList.remove("scale-100");
+        outerPage.classList.add("scale-0");
+        addForm.reset();
+        fetchData()
+        // showStudents();
+    }
 }
 
 // Delete student;
