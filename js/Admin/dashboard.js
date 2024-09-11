@@ -6,17 +6,22 @@ const loading = document.querySelector(".loading");
 
 let studentsAll;
 
+async function fetchData(){
+    try{
+        const response = await fetch('http://localhost:3000/students')
+        const data = await response.json()
+        studentsAll = data;
+        showStudents(studentsAll)
+    }
+    catch(error){
+        console.log(error);
+    }
+}
 
-axios('http://localhost:3000/students').
-then(response => {
-    studentsAll = response.data;
-    showStudents(response.data)
-})
-.catch(error => {
-    console.log(error);
-})
+fetchData()
 
 function showStudents (arr = studentsAll) {
+    console.log(arr);
     // console.log(arr);
     studentList.innerHTML = "";
     if (arr.length == 0) {
