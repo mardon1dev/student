@@ -201,6 +201,7 @@ async function updateInfo(id) {
         outerPage.classList.remove("scale-100");
         outerPage.classList.add("scale-0");
         addForm.reset();
+        imageURL.src = "./images/avarat.avif";
         showImage.src = "./images/avarat.avif";
         submitBtn.textContent = "Add";
         addForm.removeEventListener("submit", handleUpdate);
