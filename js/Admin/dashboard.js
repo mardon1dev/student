@@ -2,19 +2,22 @@
 
 const studentList = document.querySelector(".student-list");
 const noInformation = document.querySelector(".no-information");
-const loading = document.querySelector(".loading")
+const loading = document.querySelector(".loading");
+
+let studentsAll;
 
 
 axios('http://localhost:3000/students').
 then(response => {
+    studentsAll = response.data;
     showStudents(response.data)
 })
 .catch(error => {
     console.log(error);
 })
 
-function showStudents (arr = []) {
-    console.log(arr);
+function showStudents (arr = studentsAll) {
+    // console.log(arr);
     studentList.innerHTML = "";
     if (arr.length == 0) {
         noInformation.textContent = "No student information."
@@ -129,6 +132,7 @@ async function addNewStudent(e) {
 outerPage.classList.remove("scale-100");
 outerPage.classList.add("scale-0");
 addForm.reset();
+window.location.refresh()
 showStudents();
 }
 
@@ -188,7 +192,8 @@ async function updateInfo(id) {
     outerPage.classList.remove("scale-100");
     outerPage.classList.add("scale-0");
     addForm.reset();
-    showStudents();
+    window.location.refresh()
+    // showStudents();
 }
 }
 
