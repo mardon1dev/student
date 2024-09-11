@@ -201,7 +201,7 @@ async function updateInfo(id) {
         outerPage.classList.remove("scale-100");
         outerPage.classList.add("scale-0");
         addForm.reset();
-        imageURL.src = "./images/avarat.avif";
+        showImage.src = "./images/avarat.avif";
         submitBtn.textContent = "Add";
         addForm.removeEventListener("submit", handleUpdate);
         fetchData()
@@ -222,7 +222,7 @@ async function sortStudents() {
     let students = response.data;
     students = students.sort((a,b)=>{
         return a.username.localeCompare(b.username);
-    })
+    }).reverse();
     showStudents(students)
 }
 
