@@ -148,15 +148,18 @@ fetchData()
 addForm.addEventListener("submit", addNewStudent);
 
 const cancelBtn = document.querySelector("#cancel");
+const submitBtn = document.querySelector("#submit");
+
 cancelBtn.addEventListener("click", () => {
     outerPage.classList.remove("scale-100");
     outerPage.classList.add("scale-0");
     addForm.reset();
+    showImage.src = "./images/avarat.avif";
+    submitBtn.textContent = "Add";
 });
 
 // Update 
 
-const submitBtn = document.querySelector("#submit");
 
 async function updateInfo(id) {
     const response = await axios.get(`http://localhost:3000/students/${id}`);
