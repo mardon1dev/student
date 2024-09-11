@@ -6,14 +6,14 @@ const loading = document.querySelector(".loading");
 
 async function fetchData(){
     try{
-        loading.classList.add("full")
-        loading.classList.remove("hidden")
+        // loading.classList.add("full")
+        // loading.classList.remove("hidden")
 
         const response = await fetch('http://localhost:3000/students')
         const data = await response.json()
 
-        loading.classList.add("hidden");
-        loading.classList.remove("full");
+        // loading.classList.add("hidden");
+        // loading.classList.remove("full");
 
         showStudents(data)
     }
@@ -35,7 +35,7 @@ function showStudents (arr) {
         noInformation.textContent = ""
         arr.forEach(student => {
             const studentElement = document.createElement('tr');
-            studentElement.classList.add("bg-[#ffffff]")
+            studentElement.className = "bg-[#ffffff]"
             studentElement.innerHTML = `
             <td class="py-4 px-3 rounded-l-lg">
             <img class="rounded-lg object-cover" src=${student.imageURL || "./images/avarat.avif"} alt="Image" width="65" height="55">
@@ -45,8 +45,8 @@ function showStudents (arr) {
             <td class="py-4 px-3 text-sm font-normal leading-4 text-left">${student.phone}</td>
             <td class="py-4 px-3 text-sm font-normal leading-4 text-left">${student.enrollNumber}</td>
             <td class="py-4 px-3 text-sm font-normal leading-4 text-left">${student.dateAdmission}</td>
-            <td class="py-4 px-3 rounded-r-lg">
-            <div class="flex items-center justify-center gap-3">
+            <td class="py-4 px-3 rounded-r-lg function-wrapper" data-id = "${student.id}">
+            <div class="flex items-center justify-center gap-3 h-full">
             <button class="" onclick = showStudentInfo("${student.id}")>
             <svg width="28" height="13" viewBox="0 0 28 13" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g filter="url(#filter0_d_2438_2)">
@@ -211,10 +211,24 @@ async function updateInfo(id) {
 }
 
 // Delete student;
+const deleteStudentWrapper = document.querySelector(".delete-student")
 async function deleteStudent(id){
-    await axios.delete(`http://localhost:3000/students/${id}`);
-    fetchData()
-    // showStudents();
+
+    deleteStudentWrapper.classList.remove("hidden");
+    deleteStudentWrapper.classList.add("flex");
+
+    const deleteNo = deleteStudentWrapper.querySelector("#delete-no");
+    deleteNo.addEventListener("click", () => {
+        deleteStudentWrapper.classList.remove("flex");
+        deleteStudentWrapper.classList.add("hidden");
+    })
+    const deleteYes = deleteStudentWrapper.querySelector("#delete-yes");
+    deleteYes.addEventListener("click", async () => {
+        deleteStudentWrapper.classList.remove("flex");
+        deleteStudentWrapper.classList.add("hidden");
+        await axios.delete(`http://localhost:3000/students/${id}`);
+        fetchData()
+    })
 }
 
 // Sort Students
